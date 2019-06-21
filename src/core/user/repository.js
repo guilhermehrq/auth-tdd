@@ -20,7 +20,7 @@ async function createUser(data) {
     data.password_hash = await bcrypt.hash(data.password, 8);
 
     const user = await User.create(data);
-    
+
     return user._id;
 }
 
@@ -34,7 +34,7 @@ async function loginUser(data) {
         };
     }
 
-    const isPassCorrect = bcrypt.compare(data.password, user.password_hash);
+    const isPassCorrect = await bcrypt.compare(data.password, user.password_hash);
 
     if (!isPassCorrect) {
         throw {

@@ -5,6 +5,7 @@ require('dotenv').config({
 const express = require('express');
 const app = express();
 
+require('../environment');
 require('./models/models');
 
 app.use(express.json());

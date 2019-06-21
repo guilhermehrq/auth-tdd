@@ -2,7 +2,8 @@ const repository = require("./repository");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
-  loginUser
+  loginUser,
+  generateToken
 };
 
 async function loginUser(data) {
