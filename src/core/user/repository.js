@@ -8,10 +8,9 @@ module.exports = {
 };
 
 async function createUser(data) {
+    const foundUser = await User.findOne({ email: data.email });
 
-    const alreadyExist = await User.findOne({ email: data.email });
-
-    if(alreadyExist._id) {
+    if(foundUser && foundUser.id) {
         throw {
             message: 'Email already exists',
             httpCode: 401
@@ -20,13 +19,13 @@ async function createUser(data) {
 
     data.password_hash = await bcrypt.hash(data.password, 8);
 
-    const user = await User.create(data).content._id;
-
-    return user;
+    const user = await User.create(data);
+    
+    return user._id;
 }
 
 async function loginUser(data) {
-    const user = User.findOne({ email: data.login });
+    const user = await User.findOne({ email: data.login });
 
     if (!user) {
         throw {
